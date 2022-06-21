@@ -14,7 +14,7 @@ public class CSVCardReader {
     public static void main(String... args) throws IOException {
         ArrayList<Card> cards = readCardsFromCSV("SplendorGameSrc/main/java/Utils/SplendorCardValues.csv");
         for (Card card : cards) {
-            System.out.println(card.returnValue());
+            System.out.println(card.returnCost()); //just for testing
         }
     }
 
@@ -22,9 +22,10 @@ public class CSVCardReader {
         ArrayList<Card> cards = new ArrayList<>();
         Path pathToFile = Paths.get(filename);
 
-
-        try (BufferedReader reader = Files.newBufferedReader(new FileReader(pathToFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String first = reader.readLine(); //get this out of the way
             String line = reader.readLine();
+
             while (line != null) {
                 String[] attributes = line.split(",");
                 int level = Integer.parseInt(attributes[0]);
@@ -71,10 +72,11 @@ public class CSVCardReader {
                 }
                 Card newCard = new Card(level, col, value, cardColors);
                 cards.add(newCard);
+                line = reader.readLine();
             }
 
         } catch (Exception IOException) {
-            System.out.println("IOException");
+            IOException.printStackTrace();
         }
         return cards;
     }

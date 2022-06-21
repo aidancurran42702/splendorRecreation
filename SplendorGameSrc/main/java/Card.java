@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class Card {
 
     Card(int level, Color color, int value, HashMap<Color, Integer> cost) {
-        _level = level;
+        _level = level; //1, 2 or 3
         _color = color;
         _cost = cost;
         _value = value;
