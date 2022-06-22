@@ -72,6 +72,7 @@ public class CSVCardReader {
                 }
                 Card newCard = new Card(level, col, value, cardColors);
                 cards.add(newCard);
+                //System.out.print(newCard.toString());
                 line = reader.readLine();
             }
 

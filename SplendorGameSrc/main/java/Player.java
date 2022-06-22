@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,10 +9,10 @@ import java.util.HashMap;
 abstract class Player {
 
     /** A Player in GAME, initially playing COLOR. */
-    Player(GameState game) {
-        _game = game;
+    Player() {
         _hand = new ArrayList<Card>();
         _points = 0;
+        _account = new HashMap<Color, Integer>();
         _account.put(Color.BLUE, 0);
         _account.put(Color.RED, 0);
         _account.put(Color.BLACK, 0);
@@ -27,18 +28,25 @@ abstract class Player {
     }
 
     /** Return the Game I am currently playing in. */
-    final GameState getGame() {
-        return _game;
+
+
+    public void addToHand(Card card) {
+        _hand.add(card);
     }
 
     /** Return my next move, or a command.*/
-    abstract String getMove(); //this should be abstract since a player will input, but the AI will choose
+    abstract String getMove() throws IOException; //this should be abstract since a player will input, but the AI will choose
 
     HashMap<Color, Integer> showTokens() {
         return _account;
     }
 
-    void takeTokens() {
+    void takeTokens(int blue, int green, int white, int red, int black) {
+        _account.put(Color.BLUE, _account.get(Color.BLUE) + blue);
+        _account.put(Color.GREEN, _account.get(Color.GREEN) + blue);
+        _account.put(Color.WHITE, _account.get(Color.WHITE) + blue);
+        _account.put(Color.RED, _account.get(Color.RED) + blue);
+        _account.put(Color.BLACK, _account.get(Color.BLACK) + blue);
 
     };
 
@@ -49,10 +57,12 @@ abstract class Player {
     /** My current color. */
     private ArrayList<Card> _hand;
     /** The game I'm in. */
-    private final GameState _game;
+    //private final GameState _game;
 
     private HashMap<Color, Integer> _account;
 
     int _points;
+
+    boolean _isAI;
 
 }
