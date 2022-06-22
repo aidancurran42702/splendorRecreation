@@ -12,7 +12,8 @@ import java.util.HashMap;
 public class CSVCardReader {
 
     public static void main(String... args) throws IOException {
-        ArrayList<Card> cards = readCardsFromCSV("SplendorGameSrc/main/java/Utils/SplendorCardValues.csv");
+        //ArrayList<Card> cards = readCardsFromCSV("SplendorGameSrc/main/java/Utils/SplendorCardValues.csv");
+        ArrayList<Card> cards = readCardsFromCSV("out/test/Splendor AI/Utils/SplendorCardValues.csv");
         for (Card card : cards) {
             System.out.println(card.returnCost()); //just for testing
         }

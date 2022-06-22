@@ -13,7 +13,7 @@ public class Main {
          * this needs a dire fix. GameState needs to handle all the playing of the game,
          * continually requesting inputs along the way**/
         switch (args[0]) {
-            case "start": //need to have args after this to define stuff
+            case "start":
                 System.out.println("start");
                 if (!started) {
                     System.out.println("detection");

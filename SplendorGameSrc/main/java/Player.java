@@ -35,7 +35,7 @@ abstract class Player {
     }
 
     /** Return my next move, or a command.*/
-    abstract String getMove() throws IOException; //this should be abstract since a player will input, but the AI will choose
+    abstract String getMove() throws IOException;
 
     HashMap<Color, Integer> showTokens() {
         return _account;

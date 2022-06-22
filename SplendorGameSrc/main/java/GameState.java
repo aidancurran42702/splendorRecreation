@@ -3,14 +3,13 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class GameState {
-    //what do we want to keep track of in
         HashMap<Color, Integer> bank;
     /** Tracks the current state of the game and its parameters
      * upon initialization. Can be played player-vs-player or AI V AI
      * AI-vs-AI for ML purposes. Returns an exit code: 0 is
      *  normal; any positive quantity indicates an error.  */
-    GameState(Player player1, Player player2, ArrayList<Card> unshuffledDeck) { //handles the entire logic for setting up the game
-        //textSource = new InputStreamReader(System.in);
+    GameState(Player player1, Player player2, ArrayList<Card> unshuffledDeck) {
+
         _player1 = player1;
         _player2 = player2;
         bank = new HashMap<>();
@@ -28,10 +27,13 @@ public class GameState {
             switch(card._level) {
                 case 1:
                     realDeck1.push(card);
+                    break;
                 case 2:
                     realDeck2.push(card);
+                    break;
                 case 3:
                     realDeck3.push(card);
+                    break;
             }
         }
 
@@ -48,14 +50,15 @@ public class GameState {
         int _exit = 0;
         boolean winnerAnnounced = false;
         while (_exit > -1) {
-            //the entire game is played within this loop. Use other classes to request text input
-            //and do all the other shit. main hardly does anything bar creating the game object to run it
-            //and calling the play method look at proj2 for the details
             if (!getWinner()) {
                 winnerAnnounced = false;
                 System.out.print(prompt());
-                executeCommand(whoseMove().getMove()); //this may work? getMove returns something read from user
-                //need to get the player whose move it currently is and execute their move
+
+
+                System.out.println(this.toString());
+
+
+                executeCommand(whoseMove().getMove());
         }
             else {
                 System.out.println("We have a winner!");
@@ -75,7 +78,6 @@ public class GameState {
 
     /** Suite of methods for making moves, withdrawing and reserving */
     void retrieveCard(Player player, boolean isReserving, int tier, int index) {
-        //remove the hand from the data structure used, put it into the hand of the target player if !isReserving
         switch (tier) {
             case 1:
                 player.getHand().add(visibleT1[index]);
@@ -104,7 +106,7 @@ public class GameState {
     /**Returns whose move it currently is. Player1 goes first**/
     Player whoseMove() {
         Player temp = currPlayer;
-        if (currPlayer == _player1){ //maybe this should be .equals/..
+        if (currPlayer == _player1){
             currPlayer = _player2;
         }
         else {
@@ -117,21 +119,27 @@ public class GameState {
     /**Methods for displaying, in some way, the current state of the game**/
     public String toString() {
         Formatter format = new Formatter();
+
+        format.format("%n");
         format.format("Tier 3 Cards:");
         format.format("%n");
-        for (Card card : realDeck3) {
+        for (Card card : visibleT3) {
             format.format(card.toString());
         }
 
+
+        format.format("%n");
         format.format("Tier 2 Cards:");
         format.format("%n");
-        for (Card card : realDeck2) {
+        for (Card card : visibleT2) {
             format.format(card.toString());
         }
 
+
+        format.format("%n");
         format.format("Tier 1 Cards:");
         format.format("%n");
-        for (Card card : realDeck1) {
+        for (Card card : visibleT1) {
             format.format(card.toString());
         }
         return format.toString();
@@ -143,21 +151,21 @@ public class GameState {
     public void executeCommand(String command) { //no return, just calls other function of game based on inp
         String[] split = command.split(",");
         switch (split[0]) {
-            case "withdraw": //uhhh replace this with makeWithdrawal u dumbass
+            case "withdraw":
                 int numBlue = Integer.parseInt(split[1]);
                 int numGreen = Integer.parseInt(split[2]);
                 int numWhite = Integer.parseInt(split[3]);
                 int numRed = Integer.parseInt(split[4]);
                 int numBlack = Integer.parseInt(split[5]);
-                whoseMove().takeTokens(numBlue, numGreen, numWhite, numRed, numBlack); //why is this here?
+                whoseMove().takeTokens(numBlue, numGreen, numWhite, numRed, numBlack);
 
-                bank.put(Color.BLUE, bank.get(Color.BLUE) - numBlue);
-                bank.put(Color.GREEN, bank.get(Color.GREEN) - numGreen);
                 bank.put(Color.RED, bank.get(Color.RED) - numRed);
+                bank.put(Color.GREEN, bank.get(Color.GREEN) - numGreen);
+                bank.put(Color.BLUE, bank.get(Color.BLUE) - numBlue);
                 bank.put(Color.BLACK, bank.get(Color.BLACK) - numBlack);
                 bank.put(Color.WHITE, bank.get(Color.WHITE) - numWhite);
+                System.out.println("Bank:");
                 System.out.println(bank);
-
 
             case "reserve":
 
@@ -183,7 +191,9 @@ public class GameState {
                     desiredCard = realDeck1.get(Integer.parseInt(split[2]));
                 }
 
-                currPlayer.addToHand(desiredCard); //use indexing to specify the card we want
+                System.out.println(desiredCard);
+
+                currPlayer.addToHand(desiredCard);
         }
 
     }
@@ -193,9 +203,9 @@ public class GameState {
     Stack<Card> realDeck1;
     Stack<Card> realDeck2;
     Stack<Card> realDeck3;
-    Card[] visibleT1 = new Card[4];
-    Card[] visibleT2 = new Card[4];
-    Card[] visibleT3 = new Card[4];
+    Card[] visibleT1 = new Card[3];
+    Card[] visibleT2 = new Card[3];
+    Card[] visibleT3 = new Card[3];
     Player currPlayer;
     InputStreamReader textSource;
 

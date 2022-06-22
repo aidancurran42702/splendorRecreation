@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Human extends Player  { //this should extend player but otherwise it wont compile
+public class Human extends Player  {
     Human() {
         super();
         _isAI = false;
@@ -12,7 +12,7 @@ public class Human extends Player  { //this should extend player but otherwise i
 
     /**Returns a move based on the input of the user**/
     String getMove() throws IOException {
-        return br.readLine(); //return a line read in from input
+        return br.readLine();
     }
 
     InputStreamReader inputRead;

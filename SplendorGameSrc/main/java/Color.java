@@ -2,7 +2,7 @@ enum Color {
     /** Possible card or token colors. Joker only used for tokens */
     BLACK, WHITE, RED, BLUE, GREEN, JOKER;
 
-    String emojiRes() {
+    String emojiRes() { //doesnt work
         switch (this) {
             case BLACK:
                 return Character.toChars(0x1F311).toString();
