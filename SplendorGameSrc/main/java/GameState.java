@@ -37,7 +37,7 @@ public class GameState {
             }
         }
 
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 4; j++) {
             visibleT1[j] = realDeck1.pop();
             visibleT2[j] = realDeck2.pop();
             visibleT3[j] = realDeck3.pop();
@@ -166,9 +166,22 @@ public class GameState {
                 bank.put(Color.WHITE, bank.get(Color.WHITE) - numWhite);
                 System.out.println("Bank:");
                 System.out.println(bank);
+                break;
 
             case "reserve":
+                int tierOfCard = Integer.parseInt(split[1]);
+                int cardIndex = Integer.parseInt(split[2]);
+                if (Integer.parseInt(split[1]) == 1) {
+                    whoseMove().reserved.add(visibleT1[cardIndex]);
+                }
+                else if (Integer.parseInt(split[1]) == 2) {
+                    whoseMove().reserved.add(visibleT2[cardIndex]);
+                }
+                else {
+                    whoseMove().reserved.add(visibleT3[cardIndex]);
+                }
 
+                break;
 
             case "purchase":
                 Card desiredCard;
@@ -193,7 +206,18 @@ public class GameState {
 
                 System.out.println(desiredCard);
 
-                currPlayer.addToHand(desiredCard);
+                whoseMove().addToHand(desiredCard);
+                whoseMove()._points += desiredCard._value;
+                break;
+
+            case "PurchaseReserved":
+                //just have them indicate the index of their reserved cards
+                int indexOfReserved = Integer.parseInt(split[1]);
+                whoseMove()._points += whoseMove().reserved.get(indexOfReserved).returnValue();
+                whoseMove().reserved.remove(indexOfReserved);
+
+
+                break;
         }
 
     }
@@ -203,9 +227,9 @@ public class GameState {
     Stack<Card> realDeck1;
     Stack<Card> realDeck2;
     Stack<Card> realDeck3;
-    Card[] visibleT1 = new Card[3];
-    Card[] visibleT2 = new Card[3];
-    Card[] visibleT3 = new Card[3];
+    Card[] visibleT1 = new Card[4];
+    Card[] visibleT2 = new Card[4];
+    Card[] visibleT3 = new Card[4];
     Player currPlayer;
     InputStreamReader textSource;
 

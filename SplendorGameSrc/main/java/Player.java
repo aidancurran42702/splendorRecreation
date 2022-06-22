@@ -10,6 +10,7 @@ abstract class Player {
 
     /** A Player in GAME, initially playing COLOR. */
     Player() {
+        reserved = new ArrayList<>();
         _hand = new ArrayList<Card>();
         _points = 0;
         _account = new HashMap<Color, Integer>();
@@ -64,5 +65,7 @@ abstract class Player {
     int _points;
 
     boolean _isAI;
+
+    ArrayList<Card> reserved;
 
 }

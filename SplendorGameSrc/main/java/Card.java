@@ -8,6 +8,7 @@ public class Card {
         _color = color;
         _cost = cost;
         _value = value;
+        reserved = new Card[3];
     }
 
     public String toString() {
@@ -47,4 +48,5 @@ public class Card {
 
     int _value;
 
+    Card[] reserved;
 }
